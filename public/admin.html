@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Surge Wash Co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #07111f;
+      --navy-mid:  #0d2045;
+      --cyan:      #00ccee;
+      --cyan-dark: #0099bb;
+      --gold:      #ffc83a;
+      --white:     #ffffff;
+      --bg:        #f0f5fa;
+      --card:      #ffffff;
+      --border:    #dde4ef;
+      --text:      #0b1a2e;
+      --muted:     #6b7fa3;
+      --danger:    #ef4444;
+      --success:   #22c55e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); }
+    [hidden] { display: none !important; }
+
+    /* ── LOGIN ─────────────────────────────────────────── */
+    .login-wrap {
+      min-height: 100vh; display: flex;
+      align-items: center; justify-content: center;
+      background: var(--navy);
+      background-image:
+        linear-gradient(rgba(0,204,238,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,204,238,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .login-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,204,238,0.18);
+      border-radius: 12px; padding: 48px 40px;
+      width: 100%; max-width: 380px; text-align: center;
+    }
+    .login-logo {
+      font-family: 'Anton', sans-serif; font-size: 28px;
+      color: var(--white); margin-bottom: 6px;
+    }
+    .login-logo span { color: var(--cyan); }
+    .login-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 32px;
+    }
+    .login-input {
+      width: 100%; padding: 14px 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(0,204,238,0.18);
+      border-radius: 6px; color: var(--white);
+      font-family: 'Barlow', sans-serif; font-size: 16px;
+      text-align: center; letter-spacing: 4px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .login-input:focus { outline: none; border-color: var(--cyan); }
+    .login-input.error { border-color: #f87171; }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: var(--cyan); color: var(--navy);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      border-radius: 6px; border: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .login-btn:hover { background: #00deff; }
+    .login-err { font-size: 13px; color: #f87171; margin-top: 10px; min-height: 20px; }
+
+    /* ── ADMIN LAYOUT ──────────────────────────────────── */
+    .admin-wrap { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; bottom: 0; left: 0;
+      overflow-y: auto; z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 24px 20px 20px;
+      font-family: 'Anton', sans-serif; font-size: 18px;
+      color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.08);
+      line-height: 1.2;
+    }
+    .sidebar-logo .sl-wash { color: var(--cyan); }
+    .sidebar-logo .sl-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); display: block; margin-top: 4px;
+    }
+    .sidebar-nav { padding: 20px 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); cursor: pointer;
+      transition: all 0.15s; border: none; background: none;
+      text-align: left; width: 100%;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .sidebar-link.active { color: var(--cyan); background: rgba(0,204,238,0.1); }
+    .sidebar-link .icon { font-size: 18px; }
+    .sidebar-footer { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .btn-logout {
+      width: 100%; padding: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; cursor: pointer; background: none;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+    /* Main content */
+    .admin-main {
+      margin-left: 240px; flex: 1;
+      padding: 32px; min-height: 100vh;
+    }
+    .admin-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 28px;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .admin-page-title {
+      font-family: 'Anton', sans-serif; font-size: 28px; color: var(--navy);
+    }
+    .admin-date-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); padding: 6px 14px;
+      border: 1px solid var(--border); border-radius: 100px;
+    }
+
+    /* Views */
+    .admin-view { display: none; }
+    .admin-view.active { display: block; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card); border-radius: 8px;
+      padding: 20px 24px; border: 1px solid var(--border);
+    }
+    .sc-num {
+      font-family: 'Anton', sans-serif; font-size: 36px;
+      color: var(--navy); line-height: 1;
+    }
+    .sc-num.cyan { color: var(--cyan-dark); }
+    .sc-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-top: 4px;
+    }
+
+    /* Table */
+    .table-card {
+      background: var(--card); border-radius: 10px;
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .table-header {
+      padding: 18px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); gap: 12px;
+    }
+    .table-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--navy);
+    }
+    .table-count {
+      background: var(--bg); padding: 3px 10px; border-radius: 100px;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: var(--bg); padding: 10px 20px;
+      text-align: left;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 20px; font-size: 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(0,204,238,0.02); }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 100px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .badge-today { background: rgba(0,204,238,0.12); color: var(--cyan-dark); }
+    .badge-upcoming { background: rgba(100,116,139,0.1); color: var(--muted); }
+    .badge-service {
+      background: rgba(7,17,31,0.07); color: var(--navy);
+      font-size: 12px; padding: 4px 10px;
+    }
+    .btn-cancel {
+      padding: 6px 14px; border-radius: 4px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--danger); border: 1px solid rgba(239,68,68,0.3);
+      background: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-cancel:hover { background: rgba(239,68,68,0.08); border-color: var(--danger); }
+    .empty-state {
+      padding: 48px; text-align: center; color: var(--muted);
+    }
+    .empty-state .emoji { font-size: 36px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* Block form */
+    .block-form-card {
+      background: var(--card); border-radius: 10px;
+      border: 1px solid var(--border); padding: 28px;
+      margin-bottom: 28px;
+    }
+    .block-form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--navy); margin-bottom: 20px;
+    }
+    .block-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr 2fr auto;
+      gap: 12px; align-items: end;
+    }
+    .bf-group { display: flex; flex-direction: column; gap: 6px; }
+    .bf-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    }
+    .bf-input, .bf-select {
+      padding: 10px 12px; border: 1px solid var(--border);
+      border-radius: 6px; font-family: 'Barlow', sans-serif;
+      font-size: 14px; color: var(--text); background: var(--bg);
+      transition: border-color 0.2s;
+    }
+    .bf-input:focus, .bf-select:focus { outline: none; border-color: var(--cyan-dark); }
+    .btn-block-submit {
+      padding: 10px 20px; background: var(--navy); color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      border-radius: 6px; border: none; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .btn-block-submit:hover { background: var(--navy-mid); }
+    .btn-block-day {
+      padding: 10px 20px; background: var(--bg); color: var(--navy);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      border-radius: 6px; border: 1px solid var(--border);
+      cursor: pointer; transition: all 0.2s; margin-left: 8px;
+    }
+    .btn-block-day:hover { border-color: var(--navy); background: var(--white); }
+    .btn-unblock {
+      padding: 5px 12px; border-radius: 4px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border);
+      background: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-unblock:hover { color: var(--danger); border-color: rgba(239,68,68,0.3); }
+
+    /* Live indicator in sidebar */
+    .live-sidebar {
+      padding: 12px 20px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--success);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .live-sidebar-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--success);
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    .live-sidebar-dot.off { background: var(--muted); animation: none; }
+    @keyframes livePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50%      { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: var(--navy); border: 1px solid rgba(0,204,238,0.2);
+      border-radius: 8px; padding: 12px 18px;
+      font-size: 13px; color: var(--white);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transform: translateY(80px); opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .toast.show { transform: none; opacity: 1; }
+
+    @media (max-width: 900px) {
+      .sidebar { width: 100%; position: static; height: auto; flex-direction: row; flex-wrap: wrap; }
+      .admin-main { margin-left: 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .block-form-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ────────────────────────────────────────────── -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">SURGE <span>WASH</span> CO.</div>
+    <div class="login-sub">Admin Panel</div>
+    <input class="login-input" type="password" id="admin-pw" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
+<!-- ── ADMIN ─────────────────────────────────────────────── -->
+<div id="admin-screen" hidden>
+  <div class="admin-wrap">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        SURGE <span class="sl-wash">WASH</span> CO.
+        <span class="sl-sub">Admin Panel</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-link active" id="nav-dashboard" onclick="showView('dashboard')">
+          <span class="icon">📊</span> Dashboard
+        </button>
+        <button class="sidebar-link" id="nav-bookings" onclick="showView('bookings')">
+          <span class="icon">📋</span> All Bookings
+        </button>
+        <button class="sidebar-link" id="nav-block" onclick="showView('block')">
+          <span class="icon">🚫</span> Block Slots
+        </button>
+      </nav>
+      <div class="live-sidebar">
+        <span class="live-sidebar-dot" id="sidebar-dot"></span>
+        <span id="sidebar-live-text">Live</span>
+      </div>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <div class="admin-page-title" id="page-title">Dashboard</div>
+        <div class="admin-date-badge" id="today-label"></div>
+      </div>
+
+      <!-- DASHBOARD VIEW -->
+      <div class="admin-view active" id="view-dashboard">
+        <div class="stats-row" id="stats-row">
+          <div class="stat-card"><div class="sc-num" id="stat-today">—</div><div class="sc-label">Today's Bookings</div></div>
+          <div class="stat-card"><div class="sc-num" id="stat-week">—</div><div class="sc-label">This Week</div></div>
+          <div class="stat-card"><div class="sc-num cyan" id="stat-total">—</div><div class="sc-label">Total Confirmed</div></div>
+          <div class="stat-card"><div class="sc-num" id="stat-available">—</div><div class="sc-label">Open Today</div></div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Today's Schedule</div>
+            <div class="table-count" id="today-count">0 bookings</div>
+          </div>
+          <div id="today-table-wrap">
+            <div class="empty-state">
+              <div class="emoji">📅</div>
+              <p>No bookings scheduled for today.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKINGS VIEW -->
+      <div class="admin-view" id="view-bookings">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">All Upcoming Bookings</div>
+            <div class="table-count" id="all-count">loading...</div>
+          </div>
+          <div id="all-bookings-wrap">
+            <div class="empty-state"><div class="emoji">⏳</div><p>Loading...</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOCK SLOTS VIEW -->
+      <div class="admin-view" id="view-block">
+        <div class="block-form-card">
+          <div class="block-form-title">Block a Time Slot</div>
+          <div class="block-form-grid">
+            <div class="bf-group">
+              <label class="bf-label" for="bf-date">Date</label>
+              <input class="bf-input" type="date" id="bf-date">
+            </div>
+            <div class="bf-group">
+              <label class="bf-label" for="bf-time">Time Slot</label>
+              <select class="bf-select" id="bf-time">
+                <option value="08:00">8:00 AM</option>
+                <option value="09:30">9:30 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:30">12:30 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="15:30">3:30 PM</option>
+              </select>
+            </div>
+            <div class="bf-group">
+              <label class="bf-label" for="bf-reason">Reason (optional)</label>
+              <input class="bf-input" type="text" id="bf-reason" placeholder="e.g. Equipment maintenance, day off...">
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap">
+              <button class="btn-block-submit" onclick="blockSlot()">Block Slot</button>
+              <button class="btn-block-day" onclick="blockWholeDay()">Block Whole Day</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">Blocked Slots</div>
+            <div class="table-count" id="blocked-count">0</div>
+          </div>
+          <div id="blocked-table-wrap">
+            <div class="empty-state"><div class="emoji">✅</div><p>No manually blocked slots.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ────────────────────────────────────────────────
+// Change this password in the source code
+const ADMIN_PASSWORD = 'surgewash2024';
+
+function doLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  const err = document.getElementById('login-err');
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('swc-admin', '1');
+    document.getElementById('login-screen').hidden = true;
+    document.getElementById('admin-screen').hidden = false;
+    initAdmin();
+  } else {
+    document.getElementById('admin-pw').classList.add('error');
+    err.textContent = 'Incorrect password.';
+    setTimeout(() => err.textContent = '', 3000);
+  }
+}
+
+document.getElementById('admin-pw').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+  sessionStorage.removeItem('swc-admin');
+  location.reload();
+}
+
+// Auto-login if session is active
+if (sessionStorage.getItem('swc-admin') === '1') {
+  document.getElementById('login-screen').hidden = true;
+  document.getElementById('admin-screen').hidden = false;
+  document.addEventListener('DOMContentLoaded', initAdmin);
+}
+
+// ── VIEW ROUTING ────────────────────────────────────────
+const VIEWS = ['dashboard', 'bookings', 'block'];
+const TITLES = { dashboard: 'Dashboard', bookings: 'All Bookings', block: 'Block Slots' };
+
+function showView(name) {
+  VIEWS.forEach(v => {
+    document.getElementById(`view-${v}`).classList.toggle('active', v === name);
+    document.getElementById(`nav-${v}`).classList.toggle('active', v === name);
+  });
+  document.getElementById('page-title').textContent = TITLES[name];
+  if (name === 'bookings') loadAllBookings();
+  if (name === 'block')    loadBlockedSlots();
+}
+
+// ── INIT ────────────────────────────────────────────────
+let sseSource = null;
+let allBookings = [];
+let blockedSlots = [];
+
+function initAdmin() {
+  // Set today label
+  const now = new Date();
+  document.getElementById('today-label').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  // Set min date on block form
+  const todayStr = now.toISOString().split('T')[0];
+  document.getElementById('bf-date').min = todayStr;
+  document.getElementById('bf-date').value = todayStr;
+
+  loadDashboard();
+  connectSSE();
+}
+
+// ── SSE ─────────────────────────────────────────────────
+function connectSSE() {
+  if (sseSource) sseSource.close();
+  sseSource = new EventSource('/api/sse');
+  const dot  = document.getElementById('sidebar-dot');
+  const text = document.getElementById('sidebar-live-text');
+
+  sseSource.onopen  = () => { dot.classList.remove('off'); text.textContent = 'Live'; };
+  sseSource.onerror = () => {
+    dot.classList.add('off'); text.textContent = 'Reconnecting';
+    sseSource.close(); setTimeout(connectSSE, 4000);
+  };
+  sseSource.onmessage = (e) => {
+    try {
+      const msg = JSON.parse(e.data);
+      if (msg.type === 'slot_updated') {
+        loadDashboard();
+        const activeView = VIEWS.find(v => document.getElementById(`view-${v}`).classList.contains('active'));
+        if (activeView === 'bookings') loadAllBookings();
+        if (activeView === 'block')    loadBlockedSlots();
+        showToast('📡 Schedule updated');
+      }
+    } catch {}
+  };
+}
+
+// ── DATA LOADING ────────────────────────────────────────
+const SLOTS_12H = {
+  '08:00': '8:00 AM', '09:30': '9:30 AM', '11:00': '11:00 AM',
+  '12:30': '12:30 PM', '14:00': '2:00 PM', '15:30': '3:30 PM'
+};
+const ALL_SLOTS = Object.keys(SLOTS_12H);
+const SESSION_MIN = 60, BLOCK_MIN = 90;
+
+function toMin(t) { const [h,m] = t.split(':').map(Number); return h*60+m; }
+function fmt12(t) {
+  const [h,m] = t.split(':').map(Number);
+  return `${h>12?h-12:h||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;
+}
+
+async function loadDashboard() {
+  try {
+    const [bookRes, blockRes] = await Promise.all([fetch('/api/bookings'), fetch('/api/blocked')]);
+    allBookings  = await bookRes.json();
+    blockedSlots = await blockRes.json();
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    const endOfWeek = new Date(); endOfWeek.setDate(endOfWeek.getDate() + 7);
+    const eowStr = endOfWeek.toISOString().split('T')[0];
+
+    const todayBk = allBookings.filter(b => b.service_date === todayStr);
+    const weekBk  = allBookings.filter(b => b.service_date >= todayStr && b.service_date <= eowStr);
+
+    // Calculate open slots today
+    const todayBooked  = todayBk.map(b => toMin(b.start_time));
+    const todayBlocked = blockedSlots.filter(b => b.block_date === todayStr).map(b => toMin(b.start_time));
+    const allBlockedMins = [...todayBooked, ...todayBlocked];
+    const openToday = ALL_SLOTS.filter(s => {
+      const sm = toMin(s);
+      return !allBlockedMins.some(b => Math.abs(sm - b) < BLOCK_MIN);
+    }).length;
+
+    document.getElementById('stat-today').textContent     = todayBk.length;
+    document.getElementById('stat-week').textContent      = weekBk.length;
+    document.getElementById('stat-total').textContent     = allBookings.length;
+    document.getElementById('stat-available').textContent = openToday;
+    document.getElementById('today-count').textContent    = `${todayBk.length} booking${todayBk.length !== 1 ? 's' : ''}`;
+
+    // Today's table
+    const wrap = document.getElementById('today-table-wrap');
+    if (todayBk.length === 0) {
+      wrap.innerHTML = `<div class="empty-state"><div class="emoji">📅</div><p>No bookings for today.</p></div>`;
+    } else {
+      wrap.innerHTML = buildBookingsTable(todayBk, true);
+    }
+  } catch (err) { showToast('Error loading data'); }
+}
+
+async function loadAllBookings() {
+  const wrap = document.getElementById('all-bookings-wrap');
+  try {
+    const res  = await fetch('/api/bookings');
+    allBookings = await res.json();
+    document.getElementById('all-count').textContent = `${allBookings.length} total`;
+    if (allBookings.length === 0) {
+      wrap.innerHTML = `<div class="empty-state"><div class="emoji">🎉</div><p>No upcoming bookings yet.</p></div>`;
+    } else {
+      wrap.innerHTML = buildBookingsTable(allBookings, false);
+    }
+  } catch { wrap.innerHTML = `<div class="empty-state"><div class="emoji">⚠️</div><p>Failed to load bookings.</p></div>`; }
+}
+
+async function loadBlockedSlots() {
+  const wrap = document.getElementById('blocked-table-wrap');
+  try {
+    const res = await fetch('/api/blocked');
+    blockedSlots = await res.json();
+    document.getElementById('blocked-count').textContent = blockedSlots.length;
+    if (blockedSlots.length === 0) {
+      wrap.innerHTML = `<div class="empty-state"><div class="emoji">✅</div><p>No manually blocked slots.</p></div>`;
+    } else {
+      wrap.innerHTML = `
+        <table>
+          <thead><tr>
+            <th>Date</th><th>Time</th><th>Reason</th><th>Action</th>
+          </tr></thead>
+          <tbody>
+            ${blockedSlots.map(b => `
+              <tr>
+                <td>${formatDate(b.block_date)}</td>
+                <td><strong>${SLOTS_12H[b.start_time] || b.start_time}</strong></td>
+                <td style="color:var(--muted)">${b.reason || '—'}</td>
+                <td><button class="btn-unblock" onclick="unblockSlot(${b.id})">Remove</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+  } catch { wrap.innerHTML = `<div class="empty-state"><div class="emoji">⚠️</div><p>Failed to load blocked slots.</p></div>`; }
+}
+
+function buildBookingsTable(bookings, isToday) {
+  const todayStr = new Date().toISOString().split('T')[0];
+  return `
+    <table>
+      <thead><tr>
+        <th>${isToday ? 'Time' : 'Date & Time'}</th>
+        <th>Customer</th>
+        <th>Service</th>
+        <th>Contact</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr></thead>
+      <tbody>
+        ${bookings.map(b => `
+          <tr>
+            <td>
+              ${!isToday ? `<div style="font-weight:600;color:var(--navy)">${formatDate(b.service_date)}</div>` : ''}
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700">${fmt12(b.start_time)} – ${fmt12(b.end_time)}</div>
+              ${b.service_date === todayStr ? `<span class="badge badge-today">TODAY</span>` : ''}
+            </td>
+            <td>
+              <div style="font-weight:600">${escHtml(b.customer_name)}</div>
+              <div style="color:var(--muted);font-size:13px">#SWC-${String(b.id).padStart(4,'0')}</div>
+            </td>
+            <td><span class="badge badge-service">${escHtml(b.service_type)}</span></td>
+            <td>
+              <div style="font-size:13px">${escHtml(b.customer_email)}</div>
+              <div style="font-size:13px;color:var(--muted)">${escHtml(b.customer_phone)}</div>
+            </td>
+            <td style="color:var(--muted);font-size:13px;max-width:180px">${escHtml(b.notes || '—')}</td>
+            <td><button class="btn-cancel" onclick="cancelBooking(${b.id}, '${escHtml(b.customer_name)}')">Cancel</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ── ACTIONS ─────────────────────────────────────────────
+async function cancelBooking(id, name) {
+  if (!confirm(`Cancel the booking for ${name}? This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+    if (res.ok) { showToast(`Booking cancelled`); loadDashboard(); loadAllBookings(); }
+    else showToast('Error cancelling booking');
+  } catch { showToast('Network error'); }
+}
+
+async function blockSlot() {
+  const date   = document.getElementById('bf-date').value;
+  const time   = document.getElementById('bf-time').value;
+  const reason = document.getElementById('bf-reason').value.trim();
+  if (!date) { showToast('Please select a date'); return; }
+  try {
+    const res = await fetch('/api/blocked', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ block_date: date, start_time: time, reason })
+    });
+    if (res.ok) { showToast('Slot blocked'); loadBlockedSlots(); loadDashboard(); }
+    else { const d = await res.json(); showToast(d.error || 'Error'); }
+  } catch { showToast('Network error'); }
+}
+
+async function blockWholeDay() {
+  const date   = document.getElementById('bf-date').value;
+  const reason = document.getElementById('bf-reason').value.trim() || 'Day off';
+  if (!date) { showToast('Please select a date'); return; }
+  if (!confirm(`Block all slots on ${formatDate(date)}?`)) return;
+  for (const time of ALL_SLOTS) {
+    await fetch('/api/blocked', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ block_date: date, start_time: time, reason })
+    });
+  }
+  showToast(`All slots blocked for ${formatDate(date)}`);
+  loadBlockedSlots(); loadDashboard();
+}
+
+async function unblockSlot(id) {
+  try {
+    const res = await fetch(`/api/blocked/${id}`, { method: 'DELETE' });
+    if (res.ok) { showToast('Slot unblocked'); loadBlockedSlots(); loadDashboard(); }
+    else showToast('Error removing block');
+  } catch { showToast('Network error'); }
+}
+
+// ── HELPERS ─────────────────────────────────────────────
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove('show'), 4000);
+}
+</script>
+</body>
+</html>

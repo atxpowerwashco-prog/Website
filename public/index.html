@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surge Wash Co. — Professional Exterior Cleaning</title>
+  <meta name="description" content="Locally owned power washing, exterior facade cleaning, and trash can sanitizing. Affordable flat rates, satisfaction guaranteed. Book online — live availability.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── VARIABLES ─────────────────────────────────────── */
+    :root {
+      --navy:       #07111f;
+      --navy-mid:   #0d2045;
+      --navy-card:  rgba(255,255,255,0.04);
+      --cyan:       #00ccee;
+      --cyan-dark:  #0099bb;
+      --gold:       #ffc83a;
+      --white:      #ffffff;
+      --off-white:  #f0f6fc;
+      --muted:      #8099b8;
+      --border:     rgba(0,204,238,0.18);
+      --text-dark:  #0b1a2e;
+      --radius:     8px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* ── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Barlow', sans-serif; background: var(--white); color: var(--text-dark); overflow-x: hidden; }
+    img { max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    ul { list-style: none; }
+    [hidden] { display: none !important; }
+
+    /* ── SHARED SECTION STYLES ─────────────────────────── */
+    .section-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--cyan-dark); margin-bottom: 12px;
+    }
+    .section-eyebrow.light { color: var(--cyan); }
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(36px, 5vw, 54px);
+      line-height: 1; color: var(--navy);
+    }
+    .section-title.light { color: var(--white); }
+    .section-sub {
+      font-size: 17px; color: var(--muted); margin-top: 12px; max-width: 500px; line-height: 1.65;
+    }
+    .section-sub.light { color: rgba(255,255,255,0.6); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── BUTTONS ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 14px 28px; border-radius: 4px;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-primary { background: var(--cyan); color: var(--navy); }
+    .btn-primary:hover { background: #00e0ff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,204,238,0.35); }
+    .btn-outline { border: 2px solid rgba(255,255,255,0.3); color: var(--white); }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--white); }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: #ffd55f; transform: translateY(-2px); }
+
+    /* ── NAVBAR ────────────────────────────────────────── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .navbar.scrolled {
+      background: var(--navy);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+    .nav-logo {
+      font-family: 'Anton', sans-serif; font-size: 22px;
+      color: var(--white); letter-spacing: 1px;
+    }
+    .nav-logo .nl-wash { color: var(--cyan); }
+    .nav-logo .nl-co   { color: var(--gold); font-size: 16px; }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+    }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta { margin-left: 12px; }
+    .nav-toggle {
+      display: none; color: var(--white); font-size: 24px;
+    }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      gap: 28px;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.open { transform: none; }
+    .mobile-nav a {
+      font-family: 'Anton', sans-serif; font-size: 32px;
+      color: var(--white); letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--cyan); }
+    .mobile-nav-close {
+      position: absolute; top: 24px; right: 5%;
+      font-size: 28px; color: var(--white); cursor: pointer;
+    }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(0,100,160,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,204,238,0.07) 0%, transparent 60%),
+        var(--navy);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 120px 5% 80px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,204,238,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,204,238,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      animation: gridMove 24s linear infinite;
+    }
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to   { background-position: 48px 48px; }
+    }
+    .hero-bg-text {
+      position: absolute; right: -2%; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Anton', sans-serif; font-size: clamp(120px, 22vw, 320px);
+      color: rgba(255,255,255,0.025);
+      line-height: 1; pointer-events: none; user-select: none;
+      letter-spacing: -4px;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,204,238,0.12); border: 1px solid var(--border);
+      color: var(--cyan);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .hero-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(72px, 13vw, 152px);
+      line-height: 0.88; letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+    .ht-surge { display: block; color: var(--white); }
+    .ht-wash  { display: block; color: var(--cyan); }
+    .ht-co    { display: block; color: var(--gold); font-size: 0.42em; letter-spacing: 12px; margin-top: 6px; }
+    .hero-tagline {
+      font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+      color: rgba(255,255,255,0.65); line-height: 1.6;
+      margin-bottom: 36px; max-width: 500px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+    .hero-stats {
+      display: flex; gap: 0; align-items: stretch;
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .stat {
+      padding: 16px 28px; text-align: center; flex: 1;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Anton', sans-serif; font-size: 28px;
+      color: var(--cyan); line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-top: 4px;
+    }
+    .hero-diagonal {
+      position: absolute; bottom: -1px; left: 0; right: 0; height: 80px;
+      background: var(--off-white);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    }
+
+    /* ── SERVICES ──────────────────────────────────────── */
+    .services {
+      background: var(--off-white);
+      padding: 100px 5%;
+    }
+    .services-header { margin-bottom: 52px; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--white); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.13); }
+    .sc-accent { height: 5px; }
+    .sc-accent.cyan { background: var(--cyan); }
+    .sc-accent.gold { background: var(--gold); }
+    .sc-accent.blue { background: var(--cyan-dark); }
+    .sc-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+    .sc-icon { font-size: 40px; margin-bottom: 16px; }
+    .sc-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--navy); margin-bottom: 10px; line-height: 1;
+    }
+    .sc-desc { font-size: 14.5px; color: #4a6080; line-height: 1.65; margin-bottom: 20px; }
+    .sc-list { margin-bottom: 24px; display: flex; flex-direction: column; gap: 6px; }
+    .sc-list li {
+      font-size: 13.5px; color: #374b66;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .sc-list li::before { content: '✓'; color: var(--cyan-dark); font-weight: 700; flex-shrink: 0; }
+    .sc-cta { margin-top: auto; }
+    .btn-service {
+      width: 100%; padding: 13px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      border: 2px solid var(--navy); color: var(--navy);
+      border-radius: 4px; transition: all 0.2s;
+    }
+    .btn-service:hover { background: var(--navy); color: var(--white); }
+
+    /* ── HOW IT WORKS ──────────────────────────────────── */
+    .how {
+      background: var(--white);
+      padding: 100px 5%;
+    }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px; margin-top: 56px;
+    }
+    .how-step { text-align: center; }
+    .how-number {
+      font-family: 'Anton', sans-serif; font-size: 80px;
+      color: var(--off-white); line-height: 1;
+      margin-bottom: -16px; position: relative; z-index: 0;
+    }
+    .how-icon {
+      font-size: 36px; position: relative; z-index: 1;
+      display: block; margin-bottom: 16px;
+    }
+    .how-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--navy); margin-bottom: 10px;
+    }
+    .how-desc { font-size: 14.5px; color: #4a6080; line-height: 1.65; }
+    .how-connector {
+      display: none; /* shown on desktop via grid */
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────── */
+    .about {
+      background: var(--navy);
+      padding: 100px 5%;
+      position: relative; overflow: hidden;
+    }
+    .about::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,204,238,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,204,238,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .about-layout {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-text .section-sub { max-width: 100%; }
+    .about-body {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      line-height: 1.75; margin-top: 20px;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+      background: var(--border); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .about-stat {
+      background: var(--navy-card); backdrop-filter: blur(8px);
+      padding: 28px; text-align: center;
+    }
+    .about-stat-num {
+      font-family: 'Anton', sans-serif; font-size: 52px; line-height: 1;
+      color: var(--cyan);
+    }
+    .about-stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-top: 6px;
+    }
+
+    /* ── BOOKING ───────────────────────────────────────── */
+    .booking {
+      background: var(--navy-mid);
+      padding: 100px 5%;
+      position: relative;
+    }
+    .booking-header { margin-bottom: 48px; }
+    .booking-layout {
+      display: grid; grid-template-columns: 360px 1fr;
+      gap: 28px; align-items: start;
+    }
+
+    /* Calendar */
+    .calendar-panel {
+      background: var(--navy-card);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px; position: sticky; top: 90px;
+    }
+    .cal-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .cal-month-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--white);
+    }
+    .cal-arrow {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: all 0.2s;
+    }
+    .cal-arrow:hover { border-color: var(--cyan); color: var(--cyan); }
+    .cal-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .cal-day-header {
+      text-align: center; padding: 8px 0;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cal-day {
+      aspect-ratio: 1; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: rgba(255,255,255,0.7); transition: all 0.15s;
+      border: 2px solid transparent;
+    }
+    .cal-day.available { cursor: pointer; }
+    .cal-day.available:hover { background: rgba(0,204,238,0.12); color: var(--cyan); border-color: var(--border); }
+    .cal-day.selected { background: var(--cyan); color: var(--navy); font-weight: 800; }
+    .cal-day.today { border-color: var(--gold); color: var(--gold); }
+    .cal-day.today.selected { color: var(--navy); border-color: var(--cyan); }
+    .cal-day.disabled { opacity: 0.25; cursor: not-allowed; color: rgba(255,255,255,0.3); }
+    .cal-day.sunday { color: rgba(255,100,100,0.45); }
+    .cal-note {
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--muted);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .cal-note span {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Slots + Form panels */
+    .right-panel { min-height: 360px; }
+    .panel-placeholder {
+      height: 100%; min-height: 360px;
+      border: 2px dashed var(--border); border-radius: 12px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 16px; padding: 48px; text-align: center;
+    }
+    .placeholder-icon { font-size: 52px; opacity: 0.5; }
+    .placeholder-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+    .placeholder-sub { font-size: 14px; color: var(--muted); }
+
+    .panel-slots, .panel-form, .panel-success, .panel-loading { animation: fadeUp 0.3s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    .panel-loading {
+      min-height: 360px; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .slots-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .slots-date-label {
+      font-family: 'Anton', sans-serif; font-size: 26px;
+      color: var(--white); line-height: 1;
+    }
+    .live-indicator {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: #22c55e; margin-top: 4px;
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e;
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    .live-dot.offline { background: var(--muted); animation: none; }
+    @keyframes livePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+    .btn-back {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 4px;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--cyan); }
+    .slots-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    }
+    .time-slot {
+      padding: 14px 18px; border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 3px;
+      transition: all 0.2s;
+    }
+    .time-slot.available { cursor: pointer; }
+    .time-slot.available:hover {
+      border-color: var(--cyan);
+      background: rgba(0,204,238,0.08);
+      transform: translateY(-2px);
+    }
+    .time-slot.selected {
+      border-color: var(--cyan);
+      background: rgba(0,204,238,0.15);
+    }
+    .time-slot.unavailable { opacity: 0.35; cursor: not-allowed; }
+    .slot-time {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 700; color: var(--white); line-height: 1;
+    }
+    .slot-range { font-size: 12px; color: var(--muted); }
+    .slot-status {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .time-slot.available .slot-status { color: #22c55e; }
+    .time-slot.selected  .slot-status { color: var(--cyan); }
+    .time-slot.unavailable .slot-status { color: var(--muted); }
+    .slots-note {
+      margin-top: 16px;
+      font-size: 12.5px; color: var(--muted); line-height: 1.6;
+    }
+
+    /* Booking form */
+    .panel-form { padding: 0; }
+    .form-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .booking-summary-badge {
+      background: rgba(0,204,238,0.1);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 16px; flex: 1;
+    }
+    .bsb-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .bsb-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 700; color: var(--white); line-height: 1.2;
+    }
+    .bsb-sub { font-size: 12px; color: var(--cyan); margin-top: 2px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-input, .form-select, .form-textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border); border-radius: 6px;
+      color: var(--white); font-family: 'Barlow', sans-serif;
+      font-size: 15px; padding: 12px 14px;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none; border-color: var(--cyan);
+      background: rgba(0,204,238,0.06);
+    }
+    .form-input.error { border-color: #f87171; }
+    .form-select { appearance: none; cursor: pointer; }
+    .form-select option { background: var(--navy); }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-error {
+      font-size: 12px; color: #f87171; margin-top: 4px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; letter-spacing: 0.5px;
+    }
+    .form-submit-row { margin-top: 20px; }
+    .btn-submit {
+      width: 100%; padding: 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      background: var(--cyan); color: var(--navy);
+      border-radius: 6px; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover { background: #00deff; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,204,238,0.3); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-submit .btn-spinner {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(7,17,31,0.3);
+      border-top-color: var(--navy);
+      animation: spin 0.6s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .btn-spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+    .api-error {
+      background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3);
+      border-radius: 6px; padding: 12px 16px;
+      color: #fca5a5; font-size: 14px;
+      margin-bottom: 14px; line-height: 1.5;
+      display: none;
+    }
+    .api-error.show { display: block; }
+
+    /* Success card */
+    .panel-success {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 360px; padding: 40px;
+    }
+    .success-card {
+      text-align: center; max-width: 400px; width: 100%;
+    }
+    .success-check {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(34,197,94,0.15); border: 2px solid #22c55e;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 24px;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+    .success-title {
+      font-family: 'Anton', sans-serif; font-size: 32px;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .success-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .success-detail {
+      background: var(--navy-card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px; margin-bottom: 24px;
+      text-align: left; font-size: 14px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .sd-row { display: flex; justify-content: space-between; gap: 12px; }
+    .sd-label { color: var(--muted); }
+    .sd-value { color: var(--white); font-weight: 600; text-align: right; }
+    .btn-book-again {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--cyan); border: 1px solid var(--border);
+      padding: 12px 24px; border-radius: 6px;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-book-again:hover { border-color: var(--cyan); background: rgba(0,204,238,0.08); }
+
+    /* ── TESTIMONIALS ──────────────────────────────────── */
+    .testimonials {
+      background: var(--off-white); padding: 100px 5%;
+    }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 52px;
+    }
+    .t-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .t-stars { color: var(--gold); font-size: 18px; letter-spacing: 2px; }
+    .t-quote {
+      font-style: italic; font-size: 15px;
+      color: #374b66; line-height: 1.7; flex: 1;
+    }
+    .t-customer { display: flex; align-items: center; gap: 14px; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--navy); color: var(--cyan);
+      font-family: 'Anton', sans-serif; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .t-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 700; color: var(--navy);
+    }
+    .t-location { font-size: 12.5px; color: var(--muted); }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    .footer {
+      background: var(--navy); padding: 60px 5% 32px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px; padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-logo {
+      font-family: 'Anton', sans-serif; font-size: 28px;
+      color: var(--white); letter-spacing: 1px;
+    }
+    .footer-logo .fl-wash { color: var(--cyan); }
+    .footer-logo .fl-co { color: var(--gold); font-size: 20px; }
+    .footer-tagline {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.7; margin-top: 12px; max-width: 280px;
+    }
+    .footer-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 14.5px; color: rgba(255,255,255,0.65);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+    .footer-contact div {
+      font-size: 14.5px; color: rgba(255,255,255,0.65);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .footer-contact span { flex-shrink: 0; }
+    .footer-bottom {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap;
+      gap: 12px; padding-top: 28px;
+    }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+    .footer-admin a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .footer-admin a:hover { color: var(--cyan); }
+
+    /* ── TOAST ─────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      background: var(--navy); border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 600; color: var(--white);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      max-width: 300px;
+    }
+    .toast.show { transform: none; opacity: 1; }
+
+    /* ── MOBILE ────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-toggle { display: flex; }
+      .hero-title { font-size: clamp(58px, 14vw, 100px); }
+      .hero-stats { display: none; }
+      .how-grid { grid-template-columns: 1fr; gap: 32px; }
+      .about-layout { grid-template-columns: 1fr; gap: 40px; }
+      .booking-layout { grid-template-columns: 1fr; }
+      .calendar-panel { position: static; }
+      .slots-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 560px) {
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .slots-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────────────── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    SURGE <span class="nl-wash">WASH</span> <span class="nl-co">CO.</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="#booking" class="btn btn-primary nav-cta">Book Now</a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">&#9776;</button>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">&#10005;</button>
+  <a href="#services"     onclick="closeMobileNav()">Services</a>
+  <a href="#how"          onclick="closeMobileNav()">How It Works</a>
+  <a href="#about"        onclick="closeMobileNav()">About</a>
+  <a href="#testimonials" onclick="closeMobileNav()">Reviews</a>
+  <a href="#booking"      onclick="closeMobileNav()" style="color:var(--cyan)">Book Now →</a>
+</div>
+
+<!-- ── HERO ────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-bg-text">CLEAN</div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Locally Owned &amp; Operated
+    </div>
+    <h1 class="hero-title">
+      <span class="ht-surge">SURGE</span>
+      <span class="ht-wash">WASH</span>
+      <span class="ht-co">CO.</span>
+    </h1>
+    <p class="hero-tagline">
+      Professional power washing, exterior facade cleaning, and trash can sanitizing —
+      at prices your neighbors can actually afford.
+    </p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn btn-primary">Book a Service</a>
+      <a href="#services" class="btn btn-outline">See Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Jobs Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5&#9733;</div>
+        <div class="stat-label">Avg. Rating</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-diagonal"></div>
+</section>
+
+<!-- ── SERVICES ────────────────────────────────────────── -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div class="section-eyebrow">What We Do</div>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">Everything your property's exterior needs — done right, at a fair price.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="sc-accent cyan"></div>
+      <div class="sc-body">
+        <div class="sc-icon">💦</div>
+        <h3 class="sc-name">Power Washing</h3>
+        <p class="sc-desc">High-pressure cleaning that blasts away years of grime, mold, oil stains, and weather damage from any hard surface.</p>
+        <ul class="sc-list">
+          <li>Driveways &amp; concrete walkways</li>
+          <li>Patios, decks &amp; pool surrounds</li>
+          <li>Fences &amp; retaining walls</li>
+          <li>Parking lots &amp; commercial surfaces</li>
+        </ul>
+        <div class="sc-cta">
+          <button class="btn-service" onclick="bookService('Power Washing')">Book Power Washing</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="sc-accent gold"></div>
+      <div class="sc-body">
+        <div class="sc-icon">🏠</div>
+        <h3 class="sc-name">Exterior Facade Cleaning</h3>
+        <p class="sc-desc">Gentle soft-wash and targeted pressure treatments that restore your home or business exterior without causing damage.</p>
+        <ul class="sc-list">
+          <li>Vinyl siding &amp; wood siding</li>
+          <li>Brick, stucco &amp; stone facades</li>
+          <li>Gutters &amp; fascia boards</li>
+          <li>Storefronts &amp; commercial facades</li>
+        </ul>
+        <div class="sc-cta">
+          <button class="btn-service" onclick="bookService('Exterior Facade Cleaning')">Book Facade Cleaning</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="sc-accent blue"></div>
+      <div class="sc-body">
+        <div class="sc-icon">🗑️</div>
+        <h3 class="sc-name">Trash Can Cleaning</h3>
+        <p class="sc-desc">Deep-sanitized, deodorized, and disinfected from the inside out. One-time refresh or recurring monthly service available.</p>
+        <ul class="sc-list">
+          <li>Interior &amp; exterior scrub</li>
+          <li>Bacteria &amp; odor elimination</li>
+          <li>Eco-friendly disinfectant rinse</li>
+          <li>Available as a bundle add-on</li>
+        </ul>
+        <div class="sc-cta">
+          <button class="btn-service" onclick="bookService('Trash Can Cleaning')">Book Trash Can Clean</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ─────────────────────────────────────── -->
+<section class="how" id="how">
+  <div class="reveal">
+    <div class="section-eyebrow">Simple Process</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">Three easy steps — from booking to a spotless property.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-step reveal">
+      <div class="how-number">01</div>
+      <span class="how-icon">📱</span>
+      <h3 class="how-title">Book Online</h3>
+      <p class="how-desc">Pick your service, choose a date, and select an available time slot. Live availability updates in real-time so you always see what's open.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-number">02</div>
+      <span class="how-icon">🚐</span>
+      <h3 class="how-title">We Show Up</h3>
+      <p class="how-desc">Our team arrives fully equipped and on time. We assess the job, get to work, and keep you in the loop from start to finish.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-number">03</div>
+      <span class="how-icon">✨</span>
+      <h3 class="how-title">Done &amp; Clean</h3>
+      <p class="how-desc">We leave your property spotless and clean up after ourselves. If you're not happy, we'll make it right — no questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────────────────── -->
+<section class="about" id="about">
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <div class="section-eyebrow light">Our Story</div>
+      <h2 class="section-title light">Born &amp; Raised<br>Right Here</h2>
+      <p class="about-body">
+        We started Surge Wash Co. because we were tired of the big franchise companies
+        overcharging and underdelivering. We live in this community. Our kids go to school here.
+        Our neighbors are our customers — and we treat every job like it's our own home.
+      </p>
+      <p class="about-body" style="margin-top:16px;">
+        No call centers. No upsells. No nonsense. Just honest, professional work
+        at a price that makes sense for the people right around the corner.
+      </p>
+      <div style="margin-top:32px;">
+        <a href="#booking" class="btn btn-primary">Get a Free Estimate</a>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="about-stat">
+        <div class="about-stat-num">3+</div>
+        <div class="about-stat-label">Years Operating</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">500+</div>
+        <div class="about-stat-label">Happy Customers</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">5★</div>
+        <div class="about-stat-label">Average Review</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">100%</div>
+        <div class="about-stat-label">Local Team</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOKING ──────────────────────────────────────────── -->
+<section class="booking" id="booking">
+  <div class="booking-header reveal">
+    <div class="section-eyebrow light">Online Scheduling</div>
+    <h2 class="section-title light">Book Your Service</h2>
+    <p class="section-sub light">Pick a date, choose an open time — availability updates live as slots are filled.</p>
+  </div>
+
+  <div class="booking-layout">
+
+    <!-- Calendar -->
+    <div class="calendar-panel reveal">
+      <div class="cal-nav">
+        <button class="cal-arrow" id="cal-prev" aria-label="Previous month">&#8592;</button>
+        <div class="cal-month-label" id="cal-month-label"></div>
+        <button class="cal-arrow" id="cal-next" aria-label="Next month">&#8594;</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-note">
+        <span><span class="cal-dot" style="background:var(--cyan)"></span> Select to see times</span>
+        <span><span class="cal-dot" style="background:var(--gold)"></span> Today</span>
+        <span><span class="cal-dot" style="background:rgba(255,255,255,0.15)"></span> Sundays closed</span>
+      </div>
+    </div>
+
+    <!-- Right panel (placeholder / slots / form / success) -->
+    <div id="right-panel">
+
+      <!-- Placeholder -->
+      <div class="right-panel panel-placeholder" id="panel-placeholder">
+        <div class="placeholder-icon">📅</div>
+        <div class="placeholder-title">Select a Date</div>
+        <p class="placeholder-sub">Choose an available date on the calendar to see open time slots.</p>
+      </div>
+
+      <!-- Loading -->
+      <div class="right-panel panel-loading" id="panel-loading" hidden>
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Slots -->
+      <div class="right-panel panel-slots" id="panel-slots" hidden>
+        <div class="slots-header">
+          <div>
+            <div class="slots-date-label" id="slots-date-label"></div>
+            <div class="live-indicator">
+              <span class="live-dot" id="live-dot"></span>
+              <span id="live-text">Live availability</span>
+            </div>
+          </div>
+          <button class="btn-back" onclick="deselectDate()">&#8592; Change date</button>
+        </div>
+        <div class="slots-grid" id="slots-grid"></div>
+        <p class="slots-note">
+          Each session is <strong style="color:var(--white)">1 hour</strong>.
+          A <strong style="color:var(--white)">30-minute travel buffer</strong> is reserved between bookings.
+          Sessions run 8&nbsp;AM – 4:30&nbsp;PM, Mon–Sat.
+        </p>
+      </div>
+
+      <!-- Booking form -->
+      <div class="right-panel panel-form" id="panel-form" hidden>
+        <div class="form-header">
+          <div class="booking-summary-badge">
+            <div class="bsb-label">Your Booking</div>
+            <div class="bsb-value" id="form-date-label"></div>
+            <div class="bsb-sub" id="form-time-label"></div>
+          </div>
+          <button class="btn-back" onclick="deselectSlot()">&#8592; Back</button>
+        </div>
+        <div class="api-error" id="api-error"></div>
+        <form id="booking-form" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-name">Full Name *</label>
+              <input class="form-input" type="text" id="f-name" placeholder="Jane Smith" autocomplete="name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-phone">Phone Number *</label>
+              <input class="form-input" type="tel" id="f-phone" placeholder="(555) 000-0000" autocomplete="tel" required>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="f-email">Email Address *</label>
+              <input class="form-input" type="email" id="f-email" placeholder="jane@example.com" autocomplete="email" required>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="f-service">Service Type *</label>
+              <select class="form-select" id="f-service" required>
+                <option value="">— Select a service —</option>
+                <option value="Power Washing">Power Washing</option>
+                <option value="Exterior Facade Cleaning">Exterior Facade Cleaning</option>
+                <option value="Trash Can Cleaning">Trash Can Cleaning</option>
+                <option value="Bundle (Power Wash + Facade)">Bundle: Power Wash + Facade</option>
+                <option value="Bundle (All Services)">Bundle: All Services</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="f-notes">Address &amp; Notes</label>
+              <textarea class="form-textarea" id="f-notes" placeholder="Service address, access instructions, anything else we should know..."></textarea>
+            </div>
+          </div>
+          <div class="form-submit-row">
+            <button type="submit" class="btn-submit" id="btn-submit">
+              <span class="btn-spinner"></span>
+              <span class="btn-text">Confirm Booking</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success -->
+      <div class="right-panel panel-success" id="panel-success" hidden>
+        <div class="success-card">
+          <div class="success-check">✓</div>
+          <h3 class="success-title">Booking Confirmed!</h3>
+          <p class="success-sub">We've got you on the schedule. We'll see you soon — thank you for choosing Surge Wash Co.!</p>
+          <div class="success-detail" id="success-detail"></div>
+          <button class="btn-book-again" onclick="resetBooking()">Book Another Service</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────────── -->
+<section class="testimonials" id="testimonials">
+  <div class="reveal">
+    <div class="section-eyebrow">Customer Reviews</div>
+    <h2 class="section-title">What Our Neighbors Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"Our driveway and walkway look brand new. I honestly couldn't believe it was the same concrete. They were on time, professional, and finished faster than expected. Price was more than fair."</p>
+      <div class="t-customer">
+        <div class="t-avatar">SM</div>
+        <div>
+          <div class="t-name">Sarah M.</div>
+          <div class="t-location">Riverside Heights</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"Hired them to clean our vinyl siding and gutters. The difference is night and day — I keep looking out the window just to admire it. Already have them booked for next spring. Highly recommend."</p>
+      <div class="t-customer">
+        <div class="t-avatar">TK</div>
+        <div>
+          <div class="t-name">Tom K.</div>
+          <div class="t-location">Oak Valley</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-card reveal">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"The trash can service sounds simple but it's a game changer. No more dreading garbage day. They do it monthly and our cans smell completely fresh. Bundled it with a patio wash and saved a good chunk too."</p>
+      <div class="t-customer">
+        <div class="t-avatar">LR</div>
+        <div>
+          <div class="t-name">Lisa R.</div>
+          <div class="t-location">Maple Creek</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        SURGE <span class="fl-wash">WASH</span> <span class="fl-co">CO.</span>
+      </div>
+      <p class="footer-tagline">Locally owned exterior cleaning services. Affordable rates, professional results, satisfaction guaranteed.</p>
+    </div>
+    <div>
+      <div class="footer-heading">Services</div>
+      <div class="footer-links">
+        <a href="#services">Power Washing</a>
+        <a href="#services">Exterior Facades</a>
+        <a href="#services">Trash Can Cleaning</a>
+        <a href="#booking">Service Bundles</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <div class="footer-contact">
+        <div><span>📞</span> (555) 000-0000</div>
+        <div><span>📧</span> hello@surgewashco.com</div>
+        <div><span>📍</span> Your Town &amp; Surrounding Areas</div>
+        <div><span>🕐</span> Mon–Sat, 8 AM – 5 PM</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; <span id="year"></span> Surge Wash Co. All rights reserved. Licensed &amp; Insured.</div>
+    <div class="footer-admin"><a href="/admin">Admin</a></div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────
+let calViewDate  = new Date();
+let selectedDate = null;   // "YYYY-MM-DD"
+let selectedSlot = null;   // "HH:MM"
+let currentSlots = [];
+let sseSource    = null;
+let preService   = null;
+
+const TODAY = (() => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+})();
+
+// ── NAV ───────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  document.getElementById('mobile-nav').classList.add('open');
+});
+document.getElementById('mobile-nav-close').addEventListener('click', closeMobileNav);
+function closeMobileNav() {
+  document.getElementById('mobile-nav').classList.remove('open');
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── YEAR ──────────────────────────────────────────────────
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ── CALENDAR ─────────────────────────────────────────────
+const DAYS = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function renderCalendar() {
+  const year  = calViewDate.getFullYear();
+  const month = calViewDate.getMonth();
+  const grid  = document.getElementById('cal-grid');
+  const label = document.getElementById('cal-month-label');
+
+  label.textContent = `${MONTHS[month]} ${year}`;
+
+  // Limit navigation: can't go before current month or more than 2 months ahead
+  const now = new Date();
+  const isCurrentMonth = year === now.getFullYear() && month === now.getMonth();
+  const maxDate = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+  const isMaxMonth = calViewDate >= maxDate;
+
+  document.getElementById('cal-prev').disabled = isCurrentMonth;
+  document.getElementById('cal-next').disabled = isMaxMonth;
+
+  grid.innerHTML = '';
+  DAYS.forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'cal-day-header'; h.textContent = d;
+    grid.appendChild(h);
+  });
+
+  const firstDay = new Date(year, month, 1).getDay();
+  for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date    = new Date(year, month, d);
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isSun   = date.getDay() === 0;
+    const isPast  = date < today;
+    const isToday = dateStr === TODAY;
+    const isSelected = dateStr === selectedDate;
+
+    const btn = document.createElement('button');
+    let cls = 'cal-day';
+    if (isSun || isPast) cls += ' disabled';
+    else cls += ' available';
+    if (isSelected) cls += ' selected';
+    if (isToday)    cls += ' today';
+    if (isSun && !isPast) cls += ' sunday';
+    btn.className = cls;
+    btn.textContent = d;
+    btn.disabled = isSun || isPast;
+    btn.setAttribute('aria-label', `${MONTHS[month]} ${d}, ${year}`);
+    if (!isSun && !isPast) btn.addEventListener('click', () => selectDate(dateStr));
+    grid.appendChild(btn);
+  }
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth() - 1, 1);
+  renderCalendar();
+});
+document.getElementById('cal-next').addEventListener('click', () => {
+  calViewDate = new Date(calViewDate.getFullYear(), calViewDate.getMonth() + 1, 1);
+  renderCalendar();
+});
+
+// ── SLOT LOADING ──────────────────────────────────────────
+async function selectDate(dateStr) {
+  selectedDate = dateStr;
+  selectedSlot = null;
+  renderCalendar();
+  showPanel('loading');
+  await loadSlots(dateStr);
+}
+
+function deselectDate() {
+  selectedDate = null; selectedSlot = null;
+  renderCalendar();
+  showPanel('placeholder');
+}
+
+async function loadSlots(dateStr) {
+  try {
+    const res  = await fetch(`/api/availability/${dateStr}`);
+    const data = await res.json();
+    currentSlots = data.slots;
+    renderSlots(data.slots, dateStr);
+    showPanel('slots');
+  } catch (err) {
+    showToast('Could not load availability. Please try again.');
+    showPanel('placeholder');
+  }
+}
+
+function renderSlots(slots, dateStr) {
+  const grid  = document.getElementById('slots-grid');
+  const label = document.getElementById('slots-date-label');
+  label.textContent = formatDateDisplay(dateStr);
+  grid.innerHTML = '';
+
+  slots.forEach(slot => {
+    const btn = document.createElement('button');
+    btn.className = `time-slot ${slot.available ? 'available' : 'unavailable'}${slot.time === selectedSlot ? ' selected' : ''}`;
+    btn.disabled = !slot.available;
+    btn.setAttribute('aria-label', `${slot.display} — ${slot.available ? 'Available' : 'Unavailable'}`);
+    btn.innerHTML = `
+      <span class="slot-time">${slot.display}</span>
+      <span class="slot-range">Until ${slot.displayEnd}</span>
+      <span class="slot-status">${slot.available ? '✓ Available' : slot.status === 'booked' ? '✗ Booked' : '✗ Past'}</span>
+    `;
+    if (slot.available) btn.addEventListener('click', () => selectSlot(slot.time, slot.display, slot.displayEnd));
+    grid.appendChild(btn);
+  });
+}
+
+function selectSlot(time, display, displayEnd) {
+  selectedSlot = time;
+  document.getElementById('form-date-label').textContent = formatDateDisplay(selectedDate);
+  document.getElementById('form-time-label').textContent = `${display} – ${displayEnd} (1 hr session)`;
+  document.getElementById('api-error').classList.remove('show');
+  document.getElementById('api-error').textContent = '';
+  if (preService) {
+    const sel = document.getElementById('f-service');
+    if ([...sel.options].some(o => o.value === preService)) sel.value = preService;
+    preService = null;
+  }
+  showPanel('form');
+}
+
+function deselectSlot() {
+  selectedSlot = null;
+  renderSlots(currentSlots, selectedDate);
+  showPanel('slots');
+}
+
+// ── PANEL VISIBILITY ──────────────────────────────────────
+function showPanel(name) {
+  ['placeholder','loading','slots','form','success'].forEach(p => {
+    document.getElementById(`panel-${p}`).hidden = p !== name;
+  });
+}
+
+// ── BOOKING FORM ──────────────────────────────────────────
+const phoneInput = document.getElementById('f-phone');
+phoneInput.addEventListener('input', () => {
+  const digits = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length >= 7)      phoneInput.value = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+  else if (digits.length >= 4) phoneInput.value = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+  else if (digits.length >= 1) phoneInput.value = `(${digits}`;
+});
+
+document.getElementById('booking-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const service = document.getElementById('f-service').value;
+  const notes   = document.getElementById('f-notes').value.trim();
+
+  let valid = true;
+  [['f-name', name], ['f-email', email], ['f-phone', phone], ['f-service', service]].forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('error', !val);
+    if (!val) valid = false;
+  });
+  if (!valid) return;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('f-email').classList.add('error');
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.classList.add('loading'); btn.disabled = true;
+  document.getElementById('api-error').classList.remove('show');
+
+  try {
+    const res = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ customer_name: name, customer_email: email, customer_phone: phone, service_type: service, service_date: selectedDate, start_time: selectedSlot, notes })
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      const errEl = document.getElementById('api-error');
+      errEl.textContent = data.error || 'Something went wrong. Please try again.';
+      errEl.classList.add('show');
+      if (res.status === 409) {
+        // Slot taken — reload slots
+        await loadSlots(selectedDate);
+        showPanel('slots');
+        selectedSlot = null;
+        showToast('That slot was just booked. Please choose another time.');
+      }
+      return;
+    }
+
+    // Success
+    const bk = data.booking;
+    document.getElementById('success-detail').innerHTML = `
+      <div class="sd-row"><span class="sd-label">Date</span><span class="sd-value">${formatDateDisplay(bk.service_date)}</span></div>
+      <div class="sd-row"><span class="sd-label">Time</span><span class="sd-value">${fmt12(bk.start_time)} – ${fmt12(bk.end_time)}</span></div>
+      <div class="sd-row"><span class="sd-label">Service</span><span class="sd-value">${bk.service_type}</span></div>
+      <div class="sd-row"><span class="sd-label">Name</span><span class="sd-value">${bk.customer_name}</span></div>
+      <div class="sd-row"><span class="sd-label">Confirmation #</span><span class="sd-value">#SWC-${String(bk.id).padStart(4,'0')}</span></div>
+    `;
+    document.getElementById('booking-form').reset();
+    showPanel('success');
+
+  } finally {
+    btn.classList.remove('loading'); btn.disabled = false;
+  }
+});
+
+function resetBooking() {
+  selectedDate = null; selectedSlot = null; currentSlots = [];
+  renderCalendar();
+  showPanel('placeholder');
+}
+
+// ── SSE ───────────────────────────────────────────────────
+function connectSSE() {
+  if (sseSource) sseSource.close();
+  sseSource = new EventSource('/api/sse');
+  const dot  = document.getElementById('live-dot');
+  const text = document.getElementById('live-text');
+
+  sseSource.onopen = () => {
+    dot.classList.remove('offline');
+    text.textContent = 'Live availability';
+  };
+  sseSource.onmessage = (e) => {
+    try {
+      const msg = JSON.parse(e.data);
+      if (msg.type === 'slot_updated' && msg.date === selectedDate) {
+        // Re-fetch slots silently; if user is on slots view, refresh; if on form, show toast
+        loadSlots(selectedDate).then(() => {
+          const panel = ['loading','form','success'].find(p => !document.getElementById(`panel-${p}`).hidden);
+          if (!panel) return; // already on slots
+          if (panel === 'form' && selectedSlot) {
+            const stillOpen = currentSlots.find(s => s.time === selectedSlot && s.available);
+            if (!stillOpen) {
+              showToast('⚠️ Your selected slot was just booked. Please pick a new time.');
+              deselectSlot();
+            }
+          } else if (!panel) {
+            // on slots view - already refreshed
+          }
+        });
+        if (!document.getElementById('panel-slots').hidden) {
+          showToast('Availability just updated.');
+        }
+      }
+    } catch {}
+  };
+  sseSource.onerror = () => {
+    dot.classList.add('offline');
+    text.textContent = 'Reconnecting...';
+    sseSource.close();
+    setTimeout(connectSSE, 4000);
+  };
+}
+
+// ── HELPERS ───────────────────────────────────────────────
+function formatDateDisplay(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+function fmt12(time24) {
+  const [h, m] = time24.split(':').map(Number);
+  return `${h > 12 ? h-12 : h||12}:${String(m).padStart(2,'0')} ${h >= 12 ? 'PM' : 'AM'}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to = setTimeout(() => t.classList.remove('show'), 4500);
+}
+
+// ── "BOOK THIS SERVICE" SHORTCUT ──────────────────────────
+function bookService(serviceType) {
+  preService = serviceType;
+  document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── INIT ─────────────────────────────────────────────────
+renderCalendar();
+connectSSE();
+</script>
+</body>
+</html>
